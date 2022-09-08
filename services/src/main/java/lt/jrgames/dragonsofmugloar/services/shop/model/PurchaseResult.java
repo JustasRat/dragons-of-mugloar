@@ -4,11 +4,10 @@ import lombok.Data;
 
 @Data
 public class PurchaseResult {
-    private boolean success;
+    private boolean shoppingSuccess;
     private Integer lives;
     private Long gold;
-    private Long score;
-    private Long highScore;
     private Integer turn;
-    private String message;
+    private int level;
+
 }
