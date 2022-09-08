@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class PurchaseResult {
     private boolean success;
-    private int lives;
-    private long gold;
-    private long score;
-    private long highScore;
-    private int turn;
+    private Integer lives;
+    private Long gold;
+    private Long score;
+    private Long highScore;
+    private Integer turn;
     private String message;
 }

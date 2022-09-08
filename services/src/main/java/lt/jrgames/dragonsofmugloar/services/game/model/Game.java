@@ -5,10 +5,10 @@ import lombok.Data;
 @Data
 public class Game {
     private String gameId;
-    private int lives;
-    private long gold;
-    private int level;
-    private long score;
-    private long highScore;
-    private int turn;
+    private Integer lives;
+    private Long gold;
+    private Integer level;
+    private Long score;
+    private Long highScore;
+    private Integer turn;
 }
