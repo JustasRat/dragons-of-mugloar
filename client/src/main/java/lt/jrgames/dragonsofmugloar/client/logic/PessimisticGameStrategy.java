@@ -70,14 +70,14 @@ public class PessimisticGameStrategy implements GameStrategy {
     }
 
     private Optional<ShopItem> findHealItem(GameContext context) {
-        return shopService.shopItems(context.getId()).stream()
+        return shopService.availableItems(context.getId()).stream()
                 .filter(item -> item.getId().equals(HEALING_POTION_ID))
                 .findAny().
                 filter(healItem -> context.getGold() >= healItem.getCost());
     }
 
     private Optional<ShopItem> findBestBuff(GameContext context) {
-        List<ShopItem> shopItems = shopService.shopItems(context.getId());
+        List<ShopItem> shopItems = shopService.availableItems(context.getId());
         shopItems.sort(Comparator.comparing(ShopItem::getCost).reversed());
         return shopItems.stream()
                 .filter(item -> !item.getId().equals(HEALING_POTION_ID) && item.getCost() <= context.getGold())

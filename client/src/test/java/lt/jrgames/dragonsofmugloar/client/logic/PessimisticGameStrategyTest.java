@@ -73,7 +73,7 @@ class PessimisticGameStrategyTest {
                 .lives(1)
                 .gold(100)
                 .build();
-        when(shopService.shopItems("game_id")).thenReturn(new ArrayList<>(List.of(
+        when(shopService.availableItems("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("1", 100),
                 create("hpot", 50)
         )));
@@ -96,7 +96,7 @@ class PessimisticGameStrategyTest {
         when(messageService.availableMessages("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("1", 10, Probability.RISKY)
         )));
-        when(shopService.shopItems("game_id")).thenReturn(new ArrayList<>(List.of(
+        when(shopService.availableItems("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("hpot", 50)
         )));
         mockSolveResult("1");
@@ -115,7 +115,7 @@ class PessimisticGameStrategyTest {
                 create("2", 10, Probability.IMPOSSIBLE),
                 create("3", 50, Probability.SUICIDE_MISSION)
         )));
-        when(shopService.shopItems("game_id")).thenReturn(new ArrayList<>(List.of(
+        when(shopService.availableItems("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("1", 90),
                 create("2", 100)
         )));
@@ -138,7 +138,7 @@ class PessimisticGameStrategyTest {
         when(messageService.availableMessages("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("1", 10, Probability.SUICIDE_MISSION)
         )));
-        when(shopService.shopItems("game_id")).thenReturn(new ArrayList<>(List.of(
+        when(shopService.availableItems("game_id")).thenReturn(new ArrayList<>(List.of(
                 create("1", 100)
         )));
         mockSolveResult("1");
