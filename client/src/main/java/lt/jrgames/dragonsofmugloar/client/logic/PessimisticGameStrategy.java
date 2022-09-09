@@ -41,7 +41,7 @@ public class PessimisticGameStrategy implements GameStrategy {
         Message messageToSolve = findMessageToSolve(context);
         Probability probability = messageToSolve.getProbability();
 
-        if (isBuffNeeded(context, probability.getProbability())) {
+        if (isBuffNeeded(probability.getValue())) {
             Optional<ShopItem> bestBuff = findBestBuff(context);
             if (bestBuff.isPresent()) {
                 return new PurchaseAction(shopService, bestBuff.get());
@@ -55,8 +55,8 @@ public class PessimisticGameStrategy implements GameStrategy {
         return context.getLives() < MAX_LIVES;
     }
 
-    private boolean isBuffNeeded(GameContext context, float probability) {
-        return probability < Probability.RISKY.getProbability() && context.getLevel() < 30 * (1 - probability);
+    private boolean isBuffNeeded(float probability) {
+        return probability < Probability.RISKY.getValue();
     }
 
     private Message findMessageToSolve(GameContext context) {
