@@ -12,23 +12,24 @@ import java.util.stream.Collectors;
 @Getter
 @AllArgsConstructor
 public enum Probability {
-    UNKNOWN(null),
-    IMPOSSIBLE("Impossible"),
-    SUICIDE_MISSION("Suicide mission"),
-    RATHER_DETRIMENTAL("Rather detrimental"),
-    PLAYING_WITH_FIRE("Playing with fire"),
-    RISKY("Risky"),
-    GAMBLE("Gamble"),
-    HMMM("Hmmm...."),
-    QUITE_LIKELY("Quite likely"),
-    PIECE_OF_CAKE("Piece of cake"),
-    WALK_IN_THE_PARK("Walk in the park"),
-    SURE_THING("Sure thing");
+    UNKNOWN(null, 0.5f),
+    IMPOSSIBLE("Impossible", 0f),
+    SUICIDE_MISSION("Suicide mission", 0.1f),
+    RATHER_DETRIMENTAL("Rather detrimental", 0.2f),
+    PLAYING_WITH_FIRE("Playing with fire", 0.3f),
+    RISKY("Risky", 0.4f),
+    GAMBLE("Gamble", 0.5f),
+    HMMM("Hmmm....", 0.6f),
+    QUITE_LIKELY("Quite likely", 0.7f),
+    PIECE_OF_CAKE("Piece of cake", 0.8f),
+    WALK_IN_THE_PARK("Walk in the park", 0.9f),
+    SURE_THING("Sure thing", 1f);
 
-    private final String value;
+    private final String title;
+    private final float probability;
 
     private static final Map<String, Probability> probabilityMap = Arrays.stream(Probability.values())
-            .collect(Collectors.toMap(Probability::getValue, Function.identity()));
+            .collect(Collectors.toMap(Probability::getTitle, Function.identity()));
 
     public static Probability convert(String probability) {
         return Optional.ofNullable(probability)
@@ -36,8 +37,8 @@ public enum Probability {
                 .orElse(UNKNOWN);
     }
 
-    private static Probability getOrThrow(String probability) {
-        return Optional.ofNullable(probabilityMap.get(probability))
-                .orElseThrow(() -> new IllegalArgumentException("Unknown probability " + probability));
+    private static Probability getOrThrow(String title) {
+        return Optional.ofNullable(probabilityMap.get(title))
+                .orElseThrow(() -> new IllegalArgumentException("Unknown probability " + title));
     }
 }

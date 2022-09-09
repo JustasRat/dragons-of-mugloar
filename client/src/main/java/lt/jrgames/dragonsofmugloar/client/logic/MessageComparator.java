@@ -11,7 +11,7 @@ public class MessageComparator implements Comparator<Message> {
 
     @Override
     public int compare(Message message1, Message message2) {
-        int probabilityOrder = message1.getProbability().compareTo(message2.getProbability());
+        int probabilityOrder = Float.compare(message1.getProbability().getProbability(), message2.getProbability().getProbability());
         return probabilityOrder == 0 ? Long.compare(message1.getReward(), message2.getReward()) : probabilityOrder;
     }
 }

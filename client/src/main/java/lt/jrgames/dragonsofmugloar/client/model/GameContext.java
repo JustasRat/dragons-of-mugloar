@@ -1,19 +1,22 @@
 package lt.jrgames.dragonsofmugloar.client.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Value;
 import lt.jrgames.dragonsofmugloar.services.game.model.Game;
 import lt.jrgames.dragonsofmugloar.services.message.model.MessageResult;
 import lt.jrgames.dragonsofmugloar.services.shop.model.PurchaseResult;
 
 @Value
+@AllArgsConstructor
+@Builder
 public class GameContext {
     String id;
     int lives;
-    long gold;
-    long score;
+    int gold;
+    int score;
     int turn;
     int level;
-
 
     public GameContext(Game game) {
         id = game.getGameId();
@@ -21,7 +24,7 @@ public class GameContext {
         gold = game.getGold();
         score = game.getScore();
         turn = game.getTurn();
-        level = 0;
+        level = game.getLevel();
     }
 
     public GameContext(GameContext context, MessageResult messageResult) {
@@ -30,7 +33,7 @@ public class GameContext {
         gold = messageResult.getGold();
         score = messageResult.getScore();
         turn = messageResult.getTurn();
-        level = 0;
+        level = context.getLevel();
     }
 
     public GameContext(GameContext context, PurchaseResult purchaseResult) {

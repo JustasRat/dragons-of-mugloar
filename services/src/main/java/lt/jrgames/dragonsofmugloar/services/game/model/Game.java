@@ -1,14 +1,17 @@
 package lt.jrgames.dragonsofmugloar.services.game.model;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@Builder
 public class Game {
     private String gameId;
-    private Integer lives;
-    private Long gold;
-    private Integer level;
-    private Long score;
-    private Long highScore;
-    private Integer turn;
+    private int lives;
+    private int gold;
+    private int level;
+    private int score;
+    private int highScore;
+    private int turn;
 }

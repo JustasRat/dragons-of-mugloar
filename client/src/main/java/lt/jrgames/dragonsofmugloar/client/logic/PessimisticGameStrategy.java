@@ -2,9 +2,9 @@ package lt.jrgames.dragonsofmugloar.client.logic;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import lt.jrgames.dragonsofmugloar.client.actions.GameAction;
-import lt.jrgames.dragonsofmugloar.client.actions.PurchaseAction;
-import lt.jrgames.dragonsofmugloar.client.actions.SolveMessageAction;
+import lt.jrgames.dragonsofmugloar.client.logic.actions.GameAction;
+import lt.jrgames.dragonsofmugloar.client.logic.actions.PurchaseAction;
+import lt.jrgames.dragonsofmugloar.client.logic.actions.SolveMessageAction;
 import lt.jrgames.dragonsofmugloar.client.model.GameContext;
 import lt.jrgames.dragonsofmugloar.services.message.MessageService;
 import lt.jrgames.dragonsofmugloar.services.message.model.Message;
@@ -22,6 +22,8 @@ import java.util.Optional;
 @Log4j2
 public class PessimisticGameStrategy implements GameStrategy {
     public static final String HEALING_POTION_ID = "hpot";
+    public static final String IGNORE_MESSAGE_PREFIX = "Steal";
+    public static final int MAX_LIVES = 3;
     private static final Comparator<Message> messagesComparator = new MessageComparator().reversed();
 
     private MessageService messageService;
@@ -29,7 +31,7 @@ public class PessimisticGameStrategy implements GameStrategy {
 
     @Override
     public GameAction nextAction(GameContext context) {
-        if (context.getLives() < 3) {
+        if (isHealNeeded(context)) {
             Optional<ShopItem> healItem = findHealItem(context);
             if (healItem.isPresent()) {
                 return new PurchaseAction(shopService, healItem.get());
@@ -39,8 +41,7 @@ public class PessimisticGameStrategy implements GameStrategy {
         Message messageToSolve = findMessageToSolve(context);
         Probability probability = messageToSolve.getProbability();
 
-        if (probability.compareTo(Probability.RATHER_DETRIMENTAL) < 0
-                && context.getLevel() < 5 * (Probability.RATHER_DETRIMENTAL.ordinal() - probability.ordinal())) {
+        if (isBuffNeeded(context, probability.getProbability())) {
             Optional<ShopItem> bestBuff = findBestBuff(context);
             if (bestBuff.isPresent()) {
                 return new PurchaseAction(shopService, bestBuff.get());
@@ -50,12 +51,20 @@ public class PessimisticGameStrategy implements GameStrategy {
         return new SolveMessageAction(messageService, messageToSolve);
     }
 
+    private boolean isHealNeeded(GameContext context) {
+        return context.getLives() < MAX_LIVES;
+    }
+
+    private boolean isBuffNeeded(GameContext context, float probability) {
+        return probability < Probability.RISKY.getProbability() && context.getLevel() < 30 * (1 - probability);
+    }
+
     private Message findMessageToSolve(GameContext context) {
         List<Message> messages = messageService.availableMessages(context.getId());
         messages.sort(messagesComparator);
 
         return messages.stream()
-                .filter(message -> !message.getMessage().startsWith("Steal"))
+                .filter(message -> !message.getMessage().startsWith(IGNORE_MESSAGE_PREFIX))
                 .findFirst()
                 .orElse(messages.get(0));
     }
