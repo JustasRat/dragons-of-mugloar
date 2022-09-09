@@ -3,7 +3,7 @@ package lt.jrgames.dragonsofmugloar.services.message.decoders;
 public class CaesarDecoder implements Decoder {
     public static final char DEFAULT_UPPER_CHAR = 'A';
     public static final char DEFAULT_LOWER_CHAR = 'a';
-    private final static int OFFSET = 13;
+    private static final int OFFSET = 13;
 
     @Override
     public String decode(String value) {

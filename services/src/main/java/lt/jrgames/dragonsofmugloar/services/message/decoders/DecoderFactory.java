@@ -5,9 +5,9 @@ import java.util.Map;
 import java.util.Optional;
 
 public class DecoderFactory {
-    private final static int TYPE_NONE = 0;
-    private final static int TYPE_BASE64 = 1;
-    private final static int TYPE_SHIFT = 2;
+    private static final int TYPE_NONE = 0;
+    private static final int TYPE_BASE64 = 1;
+    private static final int TYPE_SHIFT = 2;
 
     private final Map<Integer, Decoder> decoders = new HashMap<>();
 

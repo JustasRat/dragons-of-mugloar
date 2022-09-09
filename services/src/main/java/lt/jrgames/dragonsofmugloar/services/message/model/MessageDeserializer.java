@@ -17,7 +17,7 @@ public class MessageDeserializer extends StdNodeBasedDeserializer<Message> {
     public static final String FIELD_REWARD = "reward";
     public static final String FIELD_PROBABILITY = "probability";
 
-    private final DecoderFactory decoderFactory = new DecoderFactory();
+    private final transient DecoderFactory decoderFactory = new DecoderFactory();
 
     public MessageDeserializer() {
         this(null);

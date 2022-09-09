@@ -26,7 +26,7 @@ public enum Probability {
     SURE_THING("Sure thing", 1f);
 
     private final String title;
-    private final float probability;
+    private final float value;
 
     private static final Map<String, Probability> probabilityMap = Arrays.stream(Probability.values())
             .collect(Collectors.toMap(Probability::getTitle, Function.identity()));
